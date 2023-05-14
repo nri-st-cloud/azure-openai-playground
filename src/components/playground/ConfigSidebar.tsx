@@ -1,6 +1,5 @@
 import { useOpenAI } from "@/context/OpenAIProvider";
 import React from "react";
-import Dropdown from "../input/Dropdown";
 import Slider from "../input/Slider";
 import { OpenAIChatModels, OpenAIConfig } from "@/utils/OpenAI";
 import useModels from "../hooks/useModels";
@@ -22,16 +21,6 @@ export default function ConfigSidebar({}: Props) {
 
   return (
     <div className="hidden min-w-[240px] flex-col items-stretch gap-y-4 p-4 md:flex">
-      <Dropdown
-        label="Model"
-        options={
-          loadingModels
-            ? []
-            : (models.map(({ id }) => ({ label: id, value: id })) as any)
-        }
-        value={config.model}
-        onSelect={(option) => handleUpdateConfig("model", option)}
-      />
       <Slider
         label="temperature"
         range={[0, 1]}

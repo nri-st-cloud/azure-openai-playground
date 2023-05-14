@@ -2,7 +2,6 @@ import { useOpenAI } from "@/context/OpenAIProvider";
 import Link from "next/link";
 import React from "react";
 import { MdChatBubbleOutline } from "react-icons/md";
-import AddTokenModal from "./../auth/AddTokenModal";
 
 type Props = {};
 
@@ -20,7 +19,6 @@ export default function Header({}: Props) {
         >
           <MdChatBubbleOutline />
         </Link>
-        <AddTokenModal className="py-2" />
       </div>
     </div>
   );
