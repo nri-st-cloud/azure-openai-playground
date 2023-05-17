@@ -1,3 +1,5 @@
+[![test](https://github.com/ks6088ts-labs/azure-openai-playground/workflows/test/badge.svg)](https://github.com/ks6088ts-labs/azure-openai-playground/actions/workflows/test.yml)
+
 # GPT-4 Playground
 
 Just got your GPT-4 API Key and want to give it a spin? Look not further! This project is mainly targeted to allow you to test out your Open AI API keys. The current OpenAI Playground still only allows 4096 tokens for 8k or 32k models like GPT-4 and if you would like to test out you key in a rendered chat environment you would have to purchase ChatCPT Plus. This project should fix both of those issues without comprimising on either experience. The project aims to preserve as much of the vanilla experience as possible while also providing a link between the the playground and ChatGPT to enable a better developer experience.
