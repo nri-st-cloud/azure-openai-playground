@@ -20,7 +20,12 @@ help:
 
 .PHONY: install-deps-dev
 install-deps-dev: ## install dependencies for development
-	yarn install
+	yarn install --frozen-lockfile
+
+.PHONY: ci-test
+ci-test: install-deps-dev ## ci-test
+	yarn lint
+	yarn build
 
 .PHONY: server
 server: ## server
