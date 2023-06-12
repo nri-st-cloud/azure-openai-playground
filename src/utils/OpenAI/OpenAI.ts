@@ -5,6 +5,11 @@ import {
   ReconnectInterval,
 } from "eventsource-parser";
 
+// Enabled by default. Stream option is disabled only when AZURE_OPENAI_API_STREAM_ENABLED is set to `false`.
+const isStreamEnabled = () => {
+  return process.env.AZURE_OPENAI_API_STREAM_ENABLED == "false" ? false : true;
+};
+
 export const defaultConfig = {
   model: "gpt-3.5-turbo",
   temperature: 0.5,
@@ -12,6 +17,7 @@ export const defaultConfig = {
   top_p: 1,
   frequency_penalty: 0,
   presence_penalty: 0.6,
+  stream: isStreamEnabled(),
 };
 
 export type OpenAIRequest = {
@@ -80,9 +86,24 @@ export const getOpenAICompletion = async (
         }
       }
 
-      const parser = createParser(onParse);
-      for await (const chunk of response.body as any) {
-        parser.feed(decoder.decode(chunk));
+      if (isStreamEnabled()) {
+        const parser = createParser(onParse);
+        for await (const chunk of response.body as any) {
+          parser.feed(decoder.decode(chunk));
+        }
+      } else {
+        try {
+          const jsonData = (await response.json()) as any;
+          const text = jsonData.choices[0].message?.content;
+          const usage = jsonData.usage;
+          const systemMessage =
+            "[total tokens:" + String(usage.total_tokens) + "]";
+          const queue = encoder.encode(text + "\n" + systemMessage);
+          controller.enqueue(queue);
+          controller.close();
+        } catch (e) {
+          controller.error(e);
+        }
       }
     },
   });
