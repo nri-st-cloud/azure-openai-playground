@@ -25,7 +25,6 @@ export type OpenAIRequest = {
 } & OpenAIConfig;
 
 const getUrl = () => {
-  console.log(`process : ${process.env.AZURE_OPENAI_API_URL}`);
   if (process.env.AZURE_OPENAI_API_URL == undefined) {
     return `https://${process.env.AZURE_OPENAI_NAME}.openai.azure.com/openai/deployments/${process.env.AZURE_OPENAI_DEPLOYMENT_NAME}/chat/completions?api-version=${process.env.AZURE_OPENAI_API_VERSION}`;
   }
@@ -44,6 +43,7 @@ export const getOpenAICompletion = async (
     headers: {
       "api-key": process.env.AZURE_OPENAI_API_KEY!,
       "Content-Type": "application/json",
+      "Authorization": `${token}`,
     },
     method: "POST",
     body: JSON.stringify(payload),
