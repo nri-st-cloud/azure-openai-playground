@@ -237,9 +237,11 @@ export default function OpenAIProvider({ children }: PropsWithChildren) {
   const getEasyAuthToken = async () => {
     var accessToken = "default";
     try {
+      // await fetch(`http://localhost:8888/me`)
       await fetch(`/.auth/me`)
         .then((response) => response.json())
         .then((data) => {
+          // accessToken = data.access_token;
           accessToken = data[0].access_token;
         })
         .catch((error) => {
@@ -262,7 +264,7 @@ export default function OpenAIProvider({ children }: PropsWithChildren) {
 
       try {
         // FIXME: try to get easy auth token every time
-        const accessToken = getEasyAuthToken();
+        const accessToken = await getEasyAuthToken();
         const decoder = new TextDecoder();
         const { body, ok } = await fetch("/api/completion", {
           method: "POST",
