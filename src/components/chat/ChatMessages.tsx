@@ -4,9 +4,11 @@ import ChatInput from "./ChatInput";
 import ChatMessage from "./ChatMessage";
 import ChatPlaceholder from "./ChatPlaceholder";
 
-type Props = {};
+type Props = {
+  branding: string;
+};
 
-export default function ChatMessages({}: Props) {
+export default function ChatMessages({branding}: Props) {
   const { messages, submit } = useOpenAI();
   const messageContainer = React.useRef<HTMLDivElement>(null);
   const [scrolling, setScrolling] = React.useState(false);
@@ -75,7 +77,7 @@ export default function ChatMessages({}: Props) {
         ref={messageContainer}
       >
         {messages.length === 0 ? (
-          <ChatPlaceholder />
+          <ChatPlaceholder branding={branding} />
         ) : (
           <>
             {messages.map((message) => (
