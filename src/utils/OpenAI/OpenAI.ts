@@ -38,6 +38,9 @@ export const getOpenAICompletion = async (
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
   const url = getUrl();
+  console.log(url);
+  console.log(token);
+  console.log(payload);
 
   const response = await fetch(url, {
     headers: {
